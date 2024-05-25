@@ -46,6 +46,7 @@ class Mailing(models.Model):
     mail_subject = models.TextField(max_length=100, verbose_name='тема письма')
     mail_text = models.TextField(max_length=350, verbose_name='тело письма')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь')
+    is_active = models.BooleanField(default=True, verbose_name='признак активности')
 
     def __str__(self):
         return f'Рассылка {self.mail_subject}.'

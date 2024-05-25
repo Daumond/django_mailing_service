@@ -30,7 +30,7 @@ class CreateMailingForm(StyleFormMixin, forms.ModelForm):
         label='Клиенты'
     )
 
-    mail_theme = forms.CharField(
+    mail_subject = forms.CharField(
         widget=forms.TextInput(attrs={'placeholder': 'Введите текст'}),
         label='Тема сообщения'
     )
