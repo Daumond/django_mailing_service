@@ -1,0 +1,56 @@
+[
+    {
+        "model": "users.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$3vHkJjRJrm3M$JfTt95x0/UzX2J92l9v6GwsO/X5cF5tMnGqQgRfxF3g=",
+            "last_login": null,
+            "is_superuser": false,
+            "first_name": "Иван",
+            "last_name": "Иванов",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2024-05-01T10:00:00Z",
+            "email": "ivanov@example.com",
+            "is_email_active": false,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$3vHkJjRJrm3M$JfTt95x0/UzX2J92l9v6GwsO/X5cF5tMnGqQgRfxF3g=",
+            "last_login": null,
+            "is_superuser": false,
+            "first_name": "Петр",
+            "last_name": "Петров",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2024-05-02T10:00:00Z",
+            "email": "petrov@example.com",
+            "is_email_active": true,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$3vHkJjRJrm3M$JfTt95x0/UzX2J92l9v6GwsO/X5cF5tMnGqQgRfxF3g=",
+            "last_login": null,
+            "is_superuser": false,
+            "first_name": "Сидор",
+            "last_name": "Сидоров",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2024-05-03T10:00:00Z",
+            "email": "sidorov@example.com",
+            "is_email_active": false,
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "model": "mailings.client",
+        "pk": 1,
+        "fields": {
+            "email": "ivanov@example.com",
+            "surname": "Иванов",
+            "name": "Иван",
+            "user": 1
+        }
+    },
+    {
+        "model": "mailings.client",
+        "pk": 2,
+        "fields": {
+            "email": "petrov@example.com",
+            "surname": "Петров",
+            "name": "Петр",
+            "user": 1
+        }
+    },
+    {
+        "model": "mailings.client",
+        "pk": 3,
+        "fields": {
+            "email": "sidorov@example.com",
+            "surname": "Сидоров",
+            "name": "Сидор",
+            "user": 1
+        }
+    }
+]

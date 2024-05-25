@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Mail Service</h1>
+</div>
+<div class="col-12">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Статистика</h4>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                Количество рассылок всего: {{ mailings }}
+            </div>
+            <div class="card-text">
+                Количество активных рассылок: {{ mailings_is_active }}
+            </div>
+            <div>
+                Количество уникальных клиентов для рассылок: {{ unique_clients_count }}
+            </div>
+        </div>
+        <div class="card-footer"></div>
+    </div>
+</div>
+<div class="row text-center">
+{% for object in object_list %}
+<div class="col-4">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header text-center">
+            <h4 class="my-0 font-weight-normal">Статья "{{ object.title }}"</h4>
+        </div>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'blog:view' object.pk %}">Подробнее</a>
+        <div class="card-footer">
+            <div class="card-text">Дата создания: {{ object.date_of_creation }}</div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

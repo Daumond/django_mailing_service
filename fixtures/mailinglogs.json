@@ -1,0 +1,38 @@
+[
+    {
+        "model": "mailings.mailinglog",
+        "pk": 1,
+        "fields": {
+            "timestamp": "2024-05-25T10:05:00Z",
+            "status": "success",
+            "server_response": "Письмо успешно отправлено.",
+            "client": [1],
+            "mailing_list": 1,
+            "user": 1
+        }
+    },
+    {
+        "model": "mailings.mailinglog",
+        "pk": 2,
+        "fields": {
+            "timestamp": "2024-05-26T10:05:00Z",
+            "status": "failed",
+            "server_response": "Не удалось отправить письмо.",
+            "client": [2],
+            "mailing_list": 2,
+            "user": 1
+        }
+    },
+    {
+        "model": "mailings.mailinglog",
+        "pk": 3,
+        "fields": {
+            "timestamp": "2024-05-27T10:05:00Z",
+            "status": "success",
+            "server_response": "Письмо успешно отправлено.",
+            "client": [3],
+            "mailing_list": 3,
+            "user": 1
+        }
+    }
+]
