@@ -21,7 +21,8 @@ class RegisterView(CreateView):
     model = User
     form_class = UserRegisterForm
     template_name = 'users/register.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('users:login')
+
 
 
 class ResetView(FormView):
@@ -47,6 +48,7 @@ class ResetView(FormView):
             'Восстановление пароля',
             message,
             to=[email],
+            from_email=settings.EMAIL_HOST_USER
         )
         email.send()
 
@@ -86,6 +88,12 @@ class EmailVerifyView(FormView):
             "uid": urlsafe_base64_encode(force_bytes(user.pk)),
             "token": token_generator.make_token(user),
         }
+        message = render_to_string('users/email_verify_message.html', context=context)
+        email = EmailMessage("Подтверждение почты",
+                             message,
+                             to=[user.email],
+                             from_email=settings.EMAIL_HOST_USER)
+        email.send()
 
 
 
