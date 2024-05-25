@@ -2,7 +2,7 @@
     <h5 class="my-0 mr-md-auto font-weight-normal">Mail Service</h5>
     <nav class="ms-auto">
         {% if user.is_superuser %}
-        <a class="p-2 btn btn-outline-primary" href="{% url 'admin:index' %}">Панель менеджера</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'admin:index' %}">Админка</a>
         {% endif %}
         {% if not user.is_authenticated %}
         <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
@@ -20,7 +20,7 @@
                <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:list_mailing' %}">Список рассылок</a>
                <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:clients_list' %}">Список клиентов</a>
             {% endif %}
-            <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:mailing_logs_list' %}">Отчеты</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:mailing_logs_list' %}">Логи рассылок</a>
         {% endif %}
     </nav>
 </div>
