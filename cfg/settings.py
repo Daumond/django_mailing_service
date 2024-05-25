@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'mailings',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -151,3 +154,5 @@ CACHES = {
         'LOCATION': os.getenv('CACHE_LOCATION'),
     }
 }
+
+AUTH_USER_MODEL = 'users.User'
