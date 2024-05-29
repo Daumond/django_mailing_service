@@ -16,11 +16,6 @@ class Client(models.Model):
     def __str__(self):
         return f'Клиент: {self.email}.'
 
-    def save(self, *args, **kwargs):
-        if Client.objects.filter(user=self.user, email=self.email).exists():
-            raise ValueError
-        super().save(*args, **kwargs)
-
     class Meta:
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'

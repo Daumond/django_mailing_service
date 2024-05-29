@@ -103,12 +103,31 @@ class CreateClientView(CreateView):
 
 
 @method_decorator(login_required(login_url='users:login'), name='dispatch')
+class UpdateClientView(UpdateView):
+    model = Client
+    form_class = CreateClientForm
+    success_url = reverse_lazy('mailings:list_client')
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['clients'] = Client.objects.filter(user=self.request.user)
+        return context
+
+
+@method_decorator(login_required(login_url='users:login'), name='dispatch')
 class ListClientView(ListView):
     model = Client
     template_name = 'mailings/clients_list.html'
 
     def get_queryset(self):
         return Client.objects.filter(user=self.request.user)
+
+
+@method_decorator(login_required(login_url='users:login'), name='dispatch')
+class DetailClientView(DetailView):
+    model = Client
+    template_name = 'mailings/client_detail.html'
 
 
 @method_decorator(login_required(login_url='users:login'), name='dispatch')

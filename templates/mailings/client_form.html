@@ -9,7 +9,11 @@
                {% csrf_token %}
                {{ form.as_p }}
                <button type="submit" name="add_client" class="btn btn-success mt-3">
-                  Добавить
+                   {% if object %}
+                       Сохранить
+                   {% else %}
+                       Создать
+                   {% endif %}
                </button>
                <a onclick="goBack()" class="btn btn-warning mt-3">Отмена</a>
             </form>

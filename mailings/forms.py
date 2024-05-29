@@ -80,4 +80,4 @@ class UpdateMailingForm(StyleFormMixin, forms.ModelForm):
 class CreateClientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Client
-        exclude = ('user',)
+        exclude = ('user', )
