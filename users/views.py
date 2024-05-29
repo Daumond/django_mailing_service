@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.views import PasswordResetDoneView
+from django.contrib.auth.views import PasswordResetDoneView, LogoutView as BaseLogoutView, LoginView as BaseLoginView
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage, get_connection
@@ -10,9 +10,9 @@ from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import View
-from django.views.generic import CreateView, FormView
+from django.views.generic import CreateView, FormView, UpdateView
 
-from users.forms import UserRegisterForm, PasswordAltResetForm
+from users.forms import UserRegisterForm, PasswordAltResetForm, UserForm
 from users.models import User
 
 
@@ -23,6 +23,15 @@ class RegisterView(CreateView):
     template_name = 'users/register.html'
     success_url = reverse_lazy('users:login')
 
+
+class LogoutView(BaseLogoutView):
+    next_page = reverse_lazy('users:login')
+    pass
+
+
+class LoginView(BaseLoginView):
+    template_name = 'users/login.html'
+    next_page = reverse_lazy('blog:home')
 
 
 class ResetView(FormView):
@@ -70,6 +79,15 @@ class ResetView(FormView):
 class ResetDoneView(PasswordResetDoneView):
     template_name = 'users/reset_done.html'
     title = "Сообщение отправлено!"
+
+
+class UserUpdateView(UpdateView):
+    model = User
+    form_class = UserForm
+    success_url = reverse_lazy('blog:home')
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 class EmailVerifyView(FormView):
