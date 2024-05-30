@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import PasswordResetDoneView, LogoutView as BaseLogoutView, LoginView as BaseLoginView
 from django.contrib.sites.shortcuts import get_current_site
@@ -10,7 +11,7 @@ from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import View
-from django.views.generic import CreateView, FormView, UpdateView
+from django.views.generic import CreateView, FormView, UpdateView, ListView
 
 from users.forms import UserRegisterForm, PasswordAltResetForm, UserForm
 from users.models import User
@@ -88,6 +89,13 @@ class UserUpdateView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class UsersListView(PermissionRequiredMixin, ListView):
+    model = User
+    permission_required = "view_all_users"
+    template_name = "users/users.html"
+
 
 
 class EmailVerifyView(FormView):

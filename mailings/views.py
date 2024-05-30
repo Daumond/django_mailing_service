@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
 
-from mailings.forms import CreateMailingForm, UpdateMailingForm, CreateClientForm, CreateMessageForm
+from mailings.forms import CreateMailingForm, UpdateMailingForm, CreateClientForm, CreateMessageForm,\
+    ManagerMailingForm
 from mailings.models import Mailing, Client, MailingLog, Message
 
 
@@ -63,6 +65,14 @@ class UpdateMailingView(UpdateView):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return UpdateMailingForm
+        if user.has_perm('mail.set_active'):
+            return ManagerMailingForm
+        raise PermissionDenied
 
 
 @method_decorator(login_required(login_url='users:login'), name='dispatch')

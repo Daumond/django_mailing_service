@@ -103,3 +103,9 @@ class CreateClientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Client
         exclude = ('user', )
+
+
+class ManagerMailingForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Mailing
+        fields = ('is_active',)

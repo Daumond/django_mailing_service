@@ -55,6 +55,7 @@ class Mailing(models.Model):
     clients = models.ManyToManyField(Client, related_name='mailings', verbose_name='клиенты')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь')
     is_active = models.BooleanField(default=True, verbose_name='признак активности')
+    is_view = models.BooleanField(default=False, verbose_name='признак просмотра')
 
     def __str__(self):
         return f'Рассылка {self.name}.'
@@ -62,6 +63,13 @@ class Mailing(models.Model):
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
+
+    permissions = [
+            (
+                'set_active',
+                'can activate mailings',
+            ),
+        ]
 
 
 class MailingLog(models.Model):
