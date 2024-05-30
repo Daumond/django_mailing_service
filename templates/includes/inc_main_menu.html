@@ -11,16 +11,23 @@
             {% if not user.is_email_active %}
             <a class="p-2 btn btn-outline-primary" href="{% url 'users:email_verify' %}">Подтвердить Email</a>
             {% endif %}
-        <a class="p-2 btn btn-outline-primary" href="{% url 'users:logout' %}">Выйти</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'users:user_form' %}">Профиль</a>
         {% endif %}
         <a class="p-2 btn btn-outline-primary" href="/">Главная</a>
         {% if user.is_authenticated %}
             {% if not user.is_superuser %}
                <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:create_mailing' %}">Создать рассылку</a>
                <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:list_mailing' %}">Список рассылок</a>
-               <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:clients_list' %}">Список клиентов</a>
+               <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:list_clients' %}">Список клиентов</a>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:list_messages' %}">Список писем</a>
             {% endif %}
             <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:mailing_logs_list' %}">Логи рассылок</a>
         {% endif %}
+        {% if user.is_authenticated %}
+    <form method="post" action="{% url 'users:logout' %}">
+            {% csrf_token %}
+            <button class="p-2 btn btn-outline-primary">Выйти</button>
+            </form>
+    {% endif %}
     </nav>
 </div>

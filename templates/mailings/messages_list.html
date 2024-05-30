@@ -1,25 +1,26 @@
 {% extends 'index.html' %}
 {% block content %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Рассылки</h1>
+    <h1 class="display-4">Сообщения</h1>
 </div>
 <div class="col-12 mb-3">
-    <a class="btn btn-outline-primary col-12" href="{% url 'mailings:create_mailing' %}">Добавить рассылку</a>
-</div>    
+    <a class="btn btn-outline-primary col-12" href="{% url 'mailings:create_message' %}">Добавить сообщение</a>
+</div>
 <div class="row text-center mt-3">
     {% for object in object_list %}
     <div class="col-3">
         <div class="card mb-4 box-shadow">
             <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Рассылка "{{ object.mail_subject }}"</h4>
+                <h4 class="my-0 font-weight-normal">Сообщение "{{ object.mail_subject }}"</h4>
             </div>
             <div class="card-body">
-                <div class="card-text">Дата рассылки: {{ object.mailing_time }}.</div>
-                <a href="{% url 'mailings:detail_mailing' object.pk %}" type="button"
+                   <div class="card-text">Текст: {{ object.mail_text }}.</div>
+                
+                <a href="{% url 'mailings:detail_message' object.pk %}" type="button"
                    class="btn btn-lg btn-block btn-outline-primary mt-3">Подробнее</a>
-                <a href="{% url 'mailings:update_mailing' object.pk %}" type="button"
+                <a href="{% url 'mailings:update_message' object.pk %}" type="button"
                    class="btn btn-lg btn-block btn-outline-warning mt-3">Изменить</a>
-                <a href="{% url 'mailings:delete_mailing' object.pk %}" type="button"
+                <a href="{% url 'mailings:delete_message' object.pk %}" type="button"
                    class="btn btn-lg btn-block btn-outline-danger mt-3">Удалить</a>
             </div>
         </div>

@@ -15,6 +15,12 @@
             </div>
             <div class="card-body">
                    <div class="card-text">ФИ: {{ object.surname }} {{ object.name }}.</div>
+                 
+                <div class="card-text">Дата рассылки: {{ object.mailing_time }}.</div>
+                <a href="{% url 'mailings:detail_client' object.pk %}" type="button"
+                   class="btn btn-lg btn-block btn-outline-primary mt-3">Подробнее</a>
+                <a href="{% url 'mailings:update_client' object.pk %}" type="button"
+                   class="btn btn-lg btn-block btn-outline-warning mt-3">Изменить</a>
                 <a href="{% url 'mailings:delete_client' object.pk %}" type="button"
                    class="btn btn-lg btn-block btn-outline-danger mt-3">Удалить</a>
             </div>

@@ -1,6 +1,6 @@
 from django import forms
 
-from mailings.models import Mailing, Client
+from mailings.models import Mailing, Client, Message
 
 
 class StyleFormMixin:
@@ -9,8 +9,26 @@ class StyleFormMixin:
         for field_name, field in self.fields.items():
             if field_name == 'clients':
                 continue
+            elif field_name == 'message':
+                field.widget.attrs['class'] = 'form-select'
             else:
                 field.widget.attrs['class'] = 'form-control'
+
+
+class CreateMessageForm(StyleFormMixin, forms.ModelForm):
+    mail_subject = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Введите текст'}),
+        label='Тема сообщения'
+    )
+
+    mail_text = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Введите текст'}),
+        label='Текст сообщения'
+    )
+
+    class Meta:
+        model = Message
+        fields = ('mail_subject', 'mail_text',)
 
 
 class CreateMailingForm(StyleFormMixin, forms.ModelForm):
@@ -30,14 +48,10 @@ class CreateMailingForm(StyleFormMixin, forms.ModelForm):
         label='Клиенты'
     )
 
-    mail_subject = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': 'Введите текст'}),
-        label='Тема сообщения'
-    )
-
-    mail_text = forms.CharField(
-        widget=forms.Textarea(attrs={'placeholder': 'Введите текст'}),
-        label='Текст сообщения'
+    message = forms.ModelChoiceField(
+        queryset=Message.objects.none(),
+        widget=forms.Select(),
+        label='Сообщение'
     )
 
     class Meta:
@@ -45,8 +59,10 @@ class CreateMailingForm(StyleFormMixin, forms.ModelForm):
         exclude = ('status', 'user', 'is_active')
 
     def __init__(self, user, *args, **kwargs):
+
         super().__init__(*args, **kwargs)
         self.fields['clients'].queryset = Client.objects.filter(user=user)
+        self.fields['message'].queryset = Message.objects.filter(user=user)
 
 
 class UpdateMailingForm(StyleFormMixin, forms.ModelForm):
@@ -67,6 +83,11 @@ class UpdateMailingForm(StyleFormMixin, forms.ModelForm):
         label='Клиенты'
     )
 
+    message = forms.ModelChoiceField(
+        queryset=Message.objects.none(),
+        label='Сообщение'
+    )
+
     class Meta:
         model = Mailing
         fields = ('mailing_time', 'frequency', 'clients')
@@ -75,9 +96,16 @@ class UpdateMailingForm(StyleFormMixin, forms.ModelForm):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
         self.fields['clients'].queryset = Client.objects.filter(user=user)
+        self.fields['message'].queryset = Message.objects.filter(user=user)
 
 
 class CreateClientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Client
-        exclude = ('user',)
+        exclude = ('user', )
+
+
+class ManagerMailingForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = Mailing
+        fields = ('is_active',)

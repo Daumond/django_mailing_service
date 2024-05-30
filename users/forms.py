@@ -1,5 +1,6 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
+from django.urls import reverse_lazy
 
 from users.models import User
 
@@ -16,3 +17,15 @@ class PasswordAltResetForm(forms.Form):
         max_length=254,
         widget=forms.EmailInput(attrs={"autocomplete": "email"}),
     )
+
+
+class UserForm(UserChangeForm):
+
+    class Meta:
+        model = User
+        fields = ('email', 'password', 'first_name', 'last_name')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['password'].widget = forms.HiddenInput()
