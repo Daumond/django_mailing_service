@@ -21,6 +21,20 @@ class Client(models.Model):
         verbose_name_plural = 'Клиенты'
 
 
+class Message(models.Model):
+    mail_subject = models.TextField(max_length=100, verbose_name='тема письма')
+    mail_text = models.TextField(verbose_name='тело письма')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='клиент')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь')
+
+    def __str__(self):
+        return f'Сообщение: {self.mail_subject}.'
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
+
+
 class Mailing(models.Model):
     FREQUENCY_CHOICES = (
         ('daily', 'Раз в день'),
@@ -34,17 +48,17 @@ class Mailing(models.Model):
         ('completed', 'Завершена'),
     )
 
+    name = models.CharField(max_length=100, verbose_name='название рассылки', default='Новая рассылка')
     mailing_time = models.DateTimeField(verbose_name='время рассылки')
     frequency = models.CharField(max_length=10, choices=FREQUENCY_CHOICES, verbose_name='периодичность')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='created', verbose_name='статус рассылки')
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='сообщение', **NULLABLE)
     clients = models.ManyToManyField(Client, related_name='mailings', verbose_name='клиенты')
-    mail_subject = models.TextField(max_length=100, verbose_name='тема письма')
-    mail_text = models.TextField(max_length=350, verbose_name='тело письма')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь')
     is_active = models.BooleanField(default=True, verbose_name='признак активности')
 
     def __str__(self):
-        return f'Рассылка {self.mail_subject}.'
+        return f'Рассылка {self.name}.'
 
     class Meta:
         verbose_name = 'Рассылка'

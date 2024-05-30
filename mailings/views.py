@@ -160,3 +160,5 @@ class DeleteMailingLogView(DeleteView):
     model = MailingLog
     template_name = 'mailings/log_confirm_delete.html'
     success_url = reverse_lazy('mailings:mailing_logs_list')
+
+
