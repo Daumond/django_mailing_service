@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
 
-from mailings.forms import CreateMailingForm, UpdateMailingForm, CreateClientForm
-from mailings.models import Mailing, Client, MailingLog
+from mailings.forms import CreateMailingForm, UpdateMailingForm, CreateClientForm, CreateMessageForm
+from mailings.models import Mailing, Client, MailingLog, Message
 
 
 # Create your views here.
@@ -162,3 +162,46 @@ class DeleteMailingLogView(DeleteView):
     success_url = reverse_lazy('mailings:mailing_logs_list')
 
 
+@method_decorator(login_required(login_url='users:login'), name='dispatch')
+class CreateMessageView(CreateView):
+    model = Message
+    form_class = CreateMessageForm
+    success_url = reverse_lazy('mailings:list_message')
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            client = form.save(commit=False)
+            client.user = self.request.user
+            client.save()
+        return redirect(self.success_url)
+
+
+@method_decorator(login_required(login_url='users:login'), name='dispatch')
+class ListMessageView(ListView):
+    model = Message
+    template_name = 'mailings/messages_list.html'
+
+    def get_queryset(self):
+        return Message.objects.filter(user=self.request.user)
+
+
+@method_decorator(login_required(login_url='users:login'), name='dispatch')
+class UpdateMessageView(UpdateView):
+    model = Message
+    form_class = CreateMessageForm
+    success_url = reverse_lazy('mailings:list_message')
+
+
+@method_decorator(login_required(login_url='users:login'), name='dispatch')
+class DeleteMessageView(DeleteView):
+    model = Message
+    template_name = 'mailings/message_confirm_delete.html'
+    success_url = reverse_lazy('mailings:list_message')
+
+
+@method_decorator(login_required(login_url='users:login'), name='dispatch')
+class DetailMessageView(DetailView):
+    model = Message
+    template_name = 'mailings/message_detail.html'

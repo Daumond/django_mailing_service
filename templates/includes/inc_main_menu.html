@@ -18,7 +18,8 @@
             {% if not user.is_superuser %}
                <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:create_mailing' %}">Создать рассылку</a>
                <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:list_mailing' %}">Список рассылок</a>
-               <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:clients_list' %}">Список клиентов</a>
+               <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:list_clients' %}">Список клиентов</a>
+                <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:list_messages' %}">Список писем</a>
             {% endif %}
             <a class="p-2 btn btn-outline-primary" href="{% url 'mailings:mailing_logs_list' %}">Логи рассылок</a>
         {% endif %}

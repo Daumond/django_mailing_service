@@ -24,7 +24,6 @@ class Client(models.Model):
 class Message(models.Model):
     mail_subject = models.TextField(max_length=100, verbose_name='тема письма')
     mail_text = models.TextField(verbose_name='тело письма')
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='клиент')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='пользователь')
 
     def __str__(self):

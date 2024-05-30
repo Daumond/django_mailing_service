@@ -1,6 +1,6 @@
 from django import forms
 
-from mailings.models import Mailing, Client
+from mailings.models import Mailing, Client, Message
 
 
 class StyleFormMixin:
@@ -11,6 +11,22 @@ class StyleFormMixin:
                 continue
             else:
                 field.widget.attrs['class'] = 'form-control'
+
+
+class CreateMessageForm(StyleFormMixin, forms.ModelForm):
+    mail_subject = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Введите текст'}),
+        label='Тема сообщения'
+    )
+
+    mail_text = forms.CharField(
+        widget=forms.Textarea(attrs={'placeholder': 'Введите текст'}),
+        label='Текст сообщения'
+    )
+
+    class Meta:
+        model = Message
+        fields = ('mail_subject', 'mail_text',)
 
 
 class CreateMailingForm(StyleFormMixin, forms.ModelForm):
@@ -30,15 +46,7 @@ class CreateMailingForm(StyleFormMixin, forms.ModelForm):
         label='Клиенты'
     )
 
-    mail_subject = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': 'Введите текст'}),
-        label='Тема сообщения'
-    )
 
-    mail_text = forms.CharField(
-        widget=forms.Textarea(attrs={'placeholder': 'Введите текст'}),
-        label='Текст сообщения'
-    )
 
     class Meta:
         model = Mailing
