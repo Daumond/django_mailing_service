@@ -3,41 +3,12 @@
         "model": "mailings.mailing",
         "pk": 1,
         "fields": {
-            "mailing_time": "2025-05-25T10:00:00Z",
-            "frequency": "daily",
-            "status": "created",
-            "clients": [1, 2],
-            "mail_subject": "Ежедневная рассылка новостей",
-            "mail_text": "Добрый день! Ознакомьтесь с нашими последними новостями.",
-            "user": 1,
-            "is_active": true
-        }
-    },
-    {
-        "model": "mailings.mailing",
-        "pk": 2,
-        "fields": {
-            "mailing_time": "2025-05-26T10:00:00Z",
-            "frequency": "weekly",
-            "status": "started",
-            "clients": [2, 3],
-            "mail_subject": "Еженедельная рассылка",
-            "mail_text": "Здравствуйте! Вот самые важные события недели.",
-            "user": 1,
-            "is_active": true
-        }
-    },
-    {
-        "model": "mailings.mailing",
-        "pk": 3,
-        "fields": {
             "mailing_time": "2025-05-27T10:00:00Z",
             "frequency": "monthly",
             "status": "completed",
-            "clients": [1, 3],
-            "mail_subject": "Ежемесячная рассылка",
-            "mail_text": "Приветствуем! Ознакомьтесь с важными событиями месяца.",
-            "user": 1,
+            "clients": [4, 3],
+            "message": 8,
+            "user": 5,
             "is_active": false
         }
     }

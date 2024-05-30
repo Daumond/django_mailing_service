@@ -3,6 +3,9 @@
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Рассылки</h1>
 </div>
+<div class="col-12 mb-3">
+    <a class="btn btn-outline-primary col-12" href="{% url 'mailings:create_mailing' %}">Добавить рассылку</a>
+</div>    
 <div class="row text-center mt-3">
     {% for object in object_list %}
     <div class="col-3">

@@ -3,7 +3,7 @@ import datetime
 from django.core.mail import send_mail
 from django.core.management import BaseCommand
 
-from mailings.models import Mailing, MailingLog
+from mailings.models import Mailing, MailingLog, Message
 from django.conf import settings
 
 
@@ -11,6 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
+        message = Message.objects.all()
         mailings = Mailing.objects.all()
         logs = MailingLog.objects.all()
         time = datetime.datetime.now().replace(tzinfo=None)
@@ -34,8 +35,8 @@ class Command(BaseCommand):
 
                     try:
                         status = send_mail(
-                            mailing.mail_subject,
-                            mailing.mail_text,
+                            message.mail_subject,
+                            message.mail_text,
                             settings.EMAIL_HOST_USER,
 
                             [client.email],

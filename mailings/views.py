@@ -16,30 +16,35 @@ class CreateMailingView(CreateView):
     form_class = CreateMailingForm
     success_url = reverse_lazy('mailings:list_mailing')
 
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
     def get(self, request, **kwargs):
+        user = self.request.user
         form = self.form_class(self.request.user, request.POST)
         context = {
             'form': form,
         }
-        clients = Client.objects.filter(user=self.request.user)
+        clients = Client.objects.filter(user=user)
+        message = Message.objects.filter(user=user)
         context['clients'] = clients
+        context['message'] = message
         return render(request, 'mailings/mailing_form.html', context)
 
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.user, request.POST)
+
+
+    def save_mailing(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
 
         if form.is_valid():
-            clients = form.cleaned_data.get('clients')
-            if not clients:
-                form.add_error('clients', 'Выберите хотя бы одного клиента.')
             mailing = form.save(commit=False)
             mailing.user = self.request.user
             mailing.save()
             form.save_m2m()
-            return redirect(self.success_url)
-
-        else:
-            return render(request, 'mailings/no_client.html')
+        return redirect(self.success_url)
 
 
 @method_decorator(login_required(login_url='users:login'), name='dispatch')
@@ -86,7 +91,7 @@ class DeleteMailingView(DeleteView):
 class CreateClientView(CreateView):
     model = Client
     form_class = CreateClientForm
-    success_url = reverse_lazy('mailings:clients_list')
+    success_url = reverse_lazy('mailings:list_client')
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
@@ -172,9 +177,9 @@ class CreateMessageView(CreateView):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            client = form.save(commit=False)
-            client.user = self.request.user
-            client.save()
+            message = form.save(commit=False)
+            message.user = self.request.user
+            message.save()
         return redirect(self.success_url)
 
 
